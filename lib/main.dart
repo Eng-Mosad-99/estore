@@ -1,3 +1,4 @@
+import 'package:ecommerce_route/core/config/di.dart';
 import 'package:ecommerce_route/core/utils/app_routes.dart';
 import 'package:ecommerce_route/core/utils/app_theme.dart';
 import 'package:ecommerce_route/features/ui/auth/login/login_screen.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
+  configureDependencies();
   runApp(MyApp());
 }
 

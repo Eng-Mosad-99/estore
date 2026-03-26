@@ -1,22 +1,24 @@
+import 'package:ecommerce_route/core/api/api_service.dart';
 import 'package:ecommerce_route/data/data_sources/remote/auth_remote_data_source.dart';
 import 'package:ecommerce_route/domain/entities/requests/login_request.dart';
 import 'package:ecommerce_route/domain/entities/requests/register_request.dart';
 import 'package:ecommerce_route/domain/entities/response/auth_response.dart';
-import 'package:ecommerce_route/domain/repositories/auth/auth_repo.dart';
 import 'package:injectable/injectable.dart';
-@Injectable(as: AuthRepo)
-class AuthRepoImpl implements AuthRepo{
-  final AuthRemoteDataSource remoteDataSource;
 
-  AuthRepoImpl({required this.remoteDataSource});
+@Injectable(as: AuthRemoteDataSource)
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
+  final ApiService apiService;
+  AuthRemoteDataSourceImpl({required this.apiService});
 
   @override
   Future<AuthResponse> login(LoginRequest loginRequest) {
-    return remoteDataSource.login(loginRequest);
+    // TODO: implement login
+    throw UnimplementedError();
   }
 
   @override
   Future<AuthResponse> register(RegisterRequest registerRequest) {
-    return remoteDataSource.register(registerRequest);
+    // TODO: implement register
+    throw UnimplementedError();
   }
 }
