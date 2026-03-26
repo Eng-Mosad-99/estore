@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:ecommerce_route/core/config/di.dart';
+import 'package:ecommerce_route/features/ui/auth/login/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_assets.dart';
@@ -17,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+ LoginCubit loginCubit = getIt<LoginCubit>();
 
   @override
   Widget build(BuildContext context) {

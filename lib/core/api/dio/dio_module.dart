@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_route/core/api/api_service.dart';
 import 'package:ecommerce_route/core/api/end_points.dart';
+import 'package:ecommerce_route/core/errors/dio_interceptors.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -31,6 +32,7 @@ abstract class GetItModule {
   Dio provideDio(BaseOptions baseOptions, PrettyDioLogger prettyDioLogger) {
     var dio = Dio(baseOptions);
     //! TODO: Add Interceptors
+    dio.interceptors.add(DioInterceptors());
     dio.interceptors.add(prettyDioLogger);
     return dio;
   }
