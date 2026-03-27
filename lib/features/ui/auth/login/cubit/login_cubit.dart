@@ -23,10 +23,12 @@ class LoginCubit extends Cubit<AuthStates> {
         emit(AuthSuccessState(authResponse: response));
       }
     } on AppException catch (e) {
-    emit(AuthErrorState(errorMsg: e.message));
-    
+      emit(AuthErrorState(errorMsg: e.message));
     } on DioException catch (e) {
-      final message = (e.error is AppException)?(e.error as AppException).message:'Unexpected Error Occurred';
+      final message = (e.error is AppException)
+          ? (e.error as AppException).message
+          : 'Unexpected Error Occurred';
+
       emit(AuthErrorState(errorMsg: message));
     }
   }
