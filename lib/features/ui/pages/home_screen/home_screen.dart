@@ -1,6 +1,8 @@
 import 'package:ecommerce_route/core/config/di.dart';
 import 'package:ecommerce_route/features/ui/pages/home_screen/cubit/home_cubit.dart';
+import 'package:ecommerce_route/features/ui/pages/home_screen/cubit/home_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/utils/app_assets.dart';
@@ -20,51 +22,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(homeCubit.selectedIndex),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        child: homeCubit.bodyList[homeCubit.selectedIndex],
-      ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.r),
-          topRight: Radius.circular(16.r),
-        ),
-        child: Theme(
-          data: Theme.of(context).copyWith(canvasColor: AppColors.primaryColor),
-          child: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            elevation: 0,
-            currentIndex: homeCubit.selectedIndex,
-            onTap: homeCubit.bottomNavOnTap,
-            iconSize: 24.sp,
-            // Adjust the icon size
-            items: [
-              _bottomNavBarItemBuilder(
-                isSelected: homeCubit.selectedIndex == 0,
-                selectedIcon: AppAssets.selectedHomeIcon,
-                unselectedIcon: AppAssets.unSelectedHomeIcon,
-              ),
-              _bottomNavBarItemBuilder(
-                isSelected: homeCubit.selectedIndex == 1,
-                selectedIcon: AppAssets.selectedCategoryIcon,
-                unselectedIcon: AppAssets.unSelectedCategoryIcon,
-              ),
-              _bottomNavBarItemBuilder(
-                isSelected: homeCubit.selectedIndex == 2,
-                selectedIcon: AppAssets.selectedFavouriteIcon,
-                unselectedIcon: AppAssets.unSelectedFavouriteIcon,
-              ),
-              _bottomNavBarItemBuilder(
-                isSelected: homeCubit.selectedIndex == 3,
-                selectedIcon: AppAssets.selectedAccountIcon,
-                unselectedIcon: AppAssets.unSelectedAccountIcon,
-              ),
-            ],
+    return BlocBuilder<HomeCubit, HomeState>(
+      bloc: homeCubit,
+      builder: (context, state) {
+        return Scaffold(
+          appBar: _buildAppBar(homeCubit.selectedIndex),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: homeCubit.bodyList[homeCubit.selectedIndex],
           ),
-        ),
-      ),
+          bottomNavigationBar: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.r),
+              topRight: Radius.circular(16.r),
+            ),
+            child: Theme(
+              data: Theme.of(
+                context,
+              ).copyWith(canvasColor: AppColors.primaryColor),
+              child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                elevation: 0,
+                currentIndex: homeCubit.selectedIndex,
+                onTap: homeCubit.bottomNavOnTap,
+                iconSize: 24.sp,
+                // Adjust the icon size
+                items: [
+                  _bottomNavBarItemBuilder(
+                    isSelected: homeCubit.selectedIndex == 0,
+                    selectedIcon: AppAssets.selectedHomeIcon,
+                    unselectedIcon: AppAssets.unSelectedHomeIcon,
+                  ),
+                  _bottomNavBarItemBuilder(
+                    isSelected: homeCubit.selectedIndex == 1,
+                    selectedIcon: AppAssets.selectedCategoryIcon,
+                    unselectedIcon: AppAssets.unSelectedCategoryIcon,
+                  ),
+                  _bottomNavBarItemBuilder(
+                    isSelected: homeCubit.selectedIndex == 2,
+                    selectedIcon: AppAssets.selectedFavouriteIcon,
+                    unselectedIcon: AppAssets.unSelectedFavouriteIcon,
+                  ),
+                  _bottomNavBarItemBuilder(
+                    isSelected: homeCubit.selectedIndex == 3,
+                    selectedIcon: AppAssets.selectedAccountIcon,
+                    unselectedIcon: AppAssets.unSelectedAccountIcon,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
