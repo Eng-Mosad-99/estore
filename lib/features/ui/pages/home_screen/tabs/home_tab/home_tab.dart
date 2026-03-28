@@ -1,14 +1,21 @@
+import 'package:ecommerce_route/core/config/di.dart';
+import 'package:ecommerce_route/features/ui/pages/home_screen/tabs/home_tab/cubit/home_tab_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../../core/utils/app_assets.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/app_styles.dart';
 import '../../../../widgets/category_brand_item.dart';
 
-class HomeTab extends StatelessWidget {
-  const HomeTab({Key? key}) : super(key: key);
+class HomeTab extends StatefulWidget {
+  const HomeTab({super.key});
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  HomeTabCubit cubit = getIt<HomeTabCubit>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +24,9 @@ class HomeTab extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 16.h,
-          ),
-          _buildAnnouncement(
-            images: [
-              AppAssets.announcement1,
-              AppAssets.announcement2,
-              AppAssets.announcement3,
-            ],
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
+          SizedBox(height: 16.h),
+          _buildAnnouncement(images: cubit.sliderImages),
+          SizedBox(height: 24.h),
           _lineBreak(name: "Categories"),
           _buildCategoryBrandSec(const CategoryBrandItem()),
           _lineBreak(name: "Brands"),
@@ -45,7 +42,10 @@ class HomeTab extends StatelessWidget {
       width: double.infinity,
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, mainAxisSpacing: 16.h, crossAxisSpacing: 16.w),
+          crossAxisCount: 3,
+          mainAxisSpacing: 16.h,
+          crossAxisSpacing: 16.w,
+        ),
         itemCount: 20,
         scrollDirection: Axis.horizontal,
         physics: const ScrollPhysics(),
@@ -56,25 +56,21 @@ class HomeTab extends StatelessWidget {
     );
   }
 
-  ImageSlideshow _buildAnnouncement({
-    required List<String> images,
-  }) {
+  ImageSlideshow _buildAnnouncement({required List<String> images}) {
     return ImageSlideshow(
-        indicatorColor: AppColors.primaryColor,
-        initialPage: 0,
-        indicatorBottomPadding: 15.h,
-        indicatorPadding: 8.w,
-        indicatorRadius: 5,
-        indicatorBackgroundColor: AppColors.whiteColor,
-        isLoop: true,
-        autoPlayInterval: 3000,
-        height: 190.h,
-        children: images.map((url) {
-          return Image.asset(
-            url,
-            fit: BoxFit.fill,
-          );
-        }).toList());
+      indicatorColor: AppColors.primaryColor,
+      initialPage: 0,
+      indicatorBottomPadding: 15.h,
+      indicatorPadding: 8.w,
+      indicatorRadius: 5,
+      indicatorBackgroundColor: AppColors.whiteColor,
+      isLoop: true,
+      autoPlayInterval: 3000,
+      height: 190.h,
+      children: images.map((url) {
+        return Image.asset(url, fit: BoxFit.fill);
+      }).toList(),
+    );
   }
 
   Widget _lineBreak({required String name}) {
@@ -87,7 +83,7 @@ class HomeTab extends StatelessWidget {
             //todo: navigate to all
           },
           child: Text("View All", style: AppStyles.regular12Text),
-        )
+        ),
       ],
     );
   }

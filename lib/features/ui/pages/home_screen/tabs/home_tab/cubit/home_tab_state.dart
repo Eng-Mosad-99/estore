@@ -1,6 +1,4 @@
-part of 'home_tab_cubit.dart';
 
-@immutable
-sealed class HomeTabState {}
+abstract class HomeTabState {}
 
 final class HomeTabInitial extends HomeTabState {}
