@@ -21,6 +21,7 @@ import '../../domain/use_cases/login_use_case.dart' as _i471;
 import '../../domain/use_cases/register_use_case.dart' as _i479;
 import '../../features/ui/auth/login/cubit/login_cubit.dart' as _i209;
 import '../../features/ui/auth/register/cubit/register_cubit.dart' as _i547;
+import '../../features/ui/pages/home_screen/cubit/home_cubit.dart' as _i1037;
 import '../api/api_service.dart' as _i299;
 import '../api/data_sources/remote/auth_remote_data_source_impl.dart' as _i668;
 import '../api/dio/dio_module.dart' as _i223;
@@ -33,6 +34,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final getItModule = _$GetItModule();
+    gh.factory<_i1037.HomeCubit>(() => _i1037.HomeCubit());
     gh.singleton<_i361.BaseOptions>(() => getItModule.provideBaseOptions());
     gh.singleton<_i528.PrettyDioLogger>(
       () => getItModule.providePrettyDioLogger(),

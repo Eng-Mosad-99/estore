@@ -1,8 +1,5 @@
-
-import 'package:ecommerce_route/features/ui/pages/home_screen/tabs/favorite_tab/favorite_tab.dart';
-import 'package:ecommerce_route/features/ui/pages/home_screen/tabs/home_tab/home_tab.dart';
-import 'package:ecommerce_route/features/ui/pages/home_screen/tabs/products_tab/products_tab.dart';
-import 'package:ecommerce_route/features/ui/pages/home_screen/tabs/user_tab/user_tab.dart';
+import 'package:ecommerce_route/core/config/di.dart';
+import 'package:ecommerce_route/features/ui/pages/home_screen/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,26 +16,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0;
-  List<Widget> bodyList = [
-    const HomeTab(),
-    ProductsTab(),
-    FavoriteTab(),
-    const UserTab()
-  ];
-
-  void bottomNavOnTap(int index) {
-    selectedIndex = index;
-    setState(() {});
-  }
+  HomeCubit homeCubit = getIt<HomeCubit>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(selectedIndex),
+      appBar: _buildAppBar(homeCubit.selectedIndex),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.w),
-        child: bodyList[selectedIndex],
+        child: homeCubit.bodyList[homeCubit.selectedIndex],
       ),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.only(
@@ -50,28 +36,28 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             elevation: 0,
-            currentIndex: selectedIndex,
-            onTap: bottomNavOnTap,
+            currentIndex: homeCubit.selectedIndex,
+            onTap: homeCubit.bottomNavOnTap,
             iconSize: 24.sp,
             // Adjust the icon size
             items: [
               _bottomNavBarItemBuilder(
-                isSelected: selectedIndex == 0,
+                isSelected: homeCubit.selectedIndex == 0,
                 selectedIcon: AppAssets.selectedHomeIcon,
                 unselectedIcon: AppAssets.unSelectedHomeIcon,
               ),
               _bottomNavBarItemBuilder(
-                isSelected: selectedIndex == 1,
+                isSelected: homeCubit.selectedIndex == 1,
                 selectedIcon: AppAssets.selectedCategoryIcon,
                 unselectedIcon: AppAssets.unSelectedCategoryIcon,
               ),
               _bottomNavBarItemBuilder(
-                isSelected: selectedIndex == 2,
+                isSelected: homeCubit.selectedIndex == 2,
                 selectedIcon: AppAssets.selectedFavouriteIcon,
                 unselectedIcon: AppAssets.unSelectedFavouriteIcon,
               ),
               _bottomNavBarItemBuilder(
-                isSelected: selectedIndex == 3,
+                isSelected: homeCubit.selectedIndex == 3,
                 selectedIcon: AppAssets.selectedAccountIcon,
                 unselectedIcon: AppAssets.unSelectedAccountIcon,
               ),
@@ -82,19 +68,19 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  BottomNavigationBarItem _bottomNavBarItemBuilder(
-      {required bool isSelected,
-      required String selectedIcon,
-      required String unselectedIcon}) {
+  BottomNavigationBarItem _bottomNavBarItemBuilder({
+    required bool isSelected,
+    required String selectedIcon,
+    required String unselectedIcon,
+  }) {
     return BottomNavigationBarItem(
       icon: CircleAvatar(
-        foregroundColor:
-            isSelected ? AppColors.primaryColor : AppColors.whiteColor,
+        foregroundColor: isSelected
+            ? AppColors.primaryColor
+            : AppColors.whiteColor,
         backgroundColor: isSelected ? AppColors.whiteColor : Colors.transparent,
         radius: 25.r,
-        child: Image.asset(
-          isSelected ? selectedIcon : unselectedIcon,
-        ),
+        child: Image.asset(isSelected ? selectedIcon : unselectedIcon),
       ),
       label: "",
     );
@@ -102,11 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   OutlineInputBorder _buildCustomBorder() {
     return OutlineInputBorder(
-        borderSide: const BorderSide(
-          color: AppColors.primaryColor,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(50.r));
+      borderSide: const BorderSide(color: AppColors.primaryColor, width: 1),
+      borderRadius: BorderRadius.circular(50.r),
+    );
   }
 
   PreferredSizeWidget _buildAppBar(int index) {
@@ -135,29 +119,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Expanded(
                       child: TextField(
-                          style: AppStyles.regular14Text,
-                          cursorColor: AppColors.primaryColor,
-                          onTap: () {
-                            //todo: implement search logic
-                          },
-                          decoration: InputDecoration(
-                              border: _buildCustomBorder(),
-                              enabledBorder: _buildCustomBorder(),
-                              focusedBorder: _buildCustomBorder(),
-                              contentPadding: EdgeInsets.all(16.h),
-                              hintStyle: AppStyles.light14SearchHint,
-                              hintText: "what do you search for?",
-                              prefixIcon: Icon(
-                                Icons.search,
-                                size: 30.sp,
-                                color: AppColors.primaryColor.withOpacity(0.75),
-                              ))),
+                        style: AppStyles.regular14Text,
+                        cursorColor: AppColors.primaryColor,
+                        onTap: () {
+                          //todo: implement search logic
+                        },
+                        decoration: InputDecoration(
+                          border: _buildCustomBorder(),
+                          enabledBorder: _buildCustomBorder(),
+                          focusedBorder: _buildCustomBorder(),
+                          contentPadding: EdgeInsets.all(16.h),
+                          hintStyle: AppStyles.light14SearchHint,
+                          hintText: "what do you search for?",
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: 30.sp,
+                            color: AppColors.primaryColor.withOpacity(0.75),
+                          ),
+                        ),
+                      ),
                     ),
-                    const CustomAppBarBadge(count: 5)
+                    const CustomAppBarBadge(count: 5),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
