@@ -40,7 +40,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(
       () => getItModule.provideDio(
         gh<_i361.BaseOptions>(),
-        gh<_i223.CustomDioLogger>(),
+        gh<_i528.PrettyDioLogger>(),
       ),
     );
     gh.singleton<_i299.ApiService>(
