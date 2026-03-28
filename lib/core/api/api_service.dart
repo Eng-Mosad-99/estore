@@ -6,6 +6,8 @@ import 'package:ecommerce_route/core/api/models/response/auth_response_dto.dart'
 
 import 'package:retrofit/retrofit.dart';
 
+import 'models/response/category/category_response_dto.dart';
+
 part 'api_service.g.dart';
 
 @RestApi(baseUrl: EndPoints.baseUrl)
@@ -17,4 +19,8 @@ abstract class ApiService {
 
   @POST(EndPoints.register)
   Future<AuthResponseDto> register(@Body() RegisterRequestDto registerRequestDto);
+  
+  @GET(EndPoints.categories)
+  Future<CategoryResponseDto> getAllCategories();
+  
 }
