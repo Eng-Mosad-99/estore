@@ -18,18 +18,10 @@ abstract class GetItModule {
 
   @singleton
   @injectable
-  PrettyDioLogger providePrettyDioLogger() => PrettyDioLogger(
-    requestHeader: true,
-    requestBody: true,
-    responseBody: true,
-    responseHeader: true,
-    error: true,
-    compact: true,
-    maxWidth: 90,
-  );
+  PrettyDioLogger providePrettyDioLogger() => CustomDioLogger();
   @singleton
   @injectable
-  Dio provideDio(BaseOptions baseOptions, PrettyDioLogger prettyDioLogger) {
+  Dio provideDio(BaseOptions baseOptions, CustomDioLogger prettyDioLogger) {
     var dio = Dio(baseOptions);
     //! TODO: Add Interceptors
     dio.interceptors.add(DioInterceptors());
@@ -40,4 +32,38 @@ abstract class GetItModule {
 @singleton
 @injectable
   ApiService provideApiService(Dio dio) => ApiService(dio);
+}
+
+class CustomDioLogger extends PrettyDioLogger {
+  final bool requestHeader, requestBody, responseBody, error, compact;
+  final int maxWidth;
+  CustomDioLogger({
+    this.requestHeader = false,
+    this.requestBody = false,
+    this.responseBody = true,
+    this.error = true,
+    this.compact = true,
+    this.maxWidth = 90,
+  }) : super(
+         requestHeader: requestHeader,
+         requestBody: requestBody,
+         responseBody: responseBody,
+         error: error,
+         compact: compact,
+         maxWidth: maxWidth,
+       );
+
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (err.response != null) {
+      logPrint('🔴 Response Data: ${err.response?.data}');
+      logPrint('🔴 Status Code: ${err.response?.statusCode}');
+      logPrint('🔴 Headers: ${err.response?.headers}');
+    } else if (err.message != null) {
+      logPrint('🔴 Error Message: ${err.message}');
+    } else {
+      logPrint('🔴 Error Details: ${err.error}');
+    }
+    super.onError(err, handler);
+  }
 }

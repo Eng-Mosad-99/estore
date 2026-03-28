@@ -13,7 +13,7 @@ class DioInterceptors extends Interceptor {
 
     if (responseData is Map) {
       message =
-          responseData['message'] ?? responseData['errors']['msg'] ?? message;
+          responseData['errors']['msg'] ?? responseData['message'] ?? message;
     }
 
     if (err.type == DioExceptionType.connectionTimeout ||
