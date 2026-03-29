@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 part 'meta_data.g.dart';
+
 @JsonSerializable()
 class Metadata {
   @JsonKey(name: 'currentPage')
@@ -9,12 +10,5 @@ class Metadata {
   @JsonKey(name: 'limit')
   final int? limit;
 
-  Metadata({
-    this.currentPage,
-    this.numberOfPages,
-    this.limit,
-  });
-
-  factory Metadata.fromJson(Map<String, dynamic> json) => _$MetadataFromJson(json);
-  Map<String, dynamic> toJson() => _$MetadataToJson(this);
+  Metadata({this.currentPage, this.numberOfPages, this.limit});
 }

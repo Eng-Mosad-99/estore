@@ -14,9 +14,8 @@ CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) =>
           : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
       data: (json['data'] as List<dynamic>?)
           ?.map(
-            (e) => e == null
-                ? null
-                : CategoryData.fromJson(e as Map<String, dynamic>),
+            (e) =>
+                e == null ? null : Category.fromJson(e as Map<String, dynamic>),
           )
           .toList(),
     );

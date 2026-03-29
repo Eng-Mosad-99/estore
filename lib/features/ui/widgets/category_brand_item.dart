@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_route/domain/entities/response/category/category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/utils/app_colors.dart';
 
 class CategoryBrandItem extends StatelessWidget {
-  const CategoryBrandItem({super.key});
-
+  const CategoryBrandItem({super.key, required this.category});
+final Category category;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,8 +18,8 @@ class CategoryBrandItem extends StatelessWidget {
               width: double.infinity,
               height: 10.h,
               fit: BoxFit.cover,
-              imageUrl:
-                  "https://cdn.mos.cms.futurecdn.net/KDtxxKuvtvDrxrx2ntEbWV-650-80.jpg.webp",
+              imageUrl: category.image??'',
+                  // "https://cdn.mos.cms.futurecdn.net/KDtxxKuvtvDrxrx2ntEbWV-650-80.jpg.webp",
               imageBuilder: (context, imageProvider) {
                 return CircleAvatar(
                   backgroundImage: imageProvider,
@@ -41,7 +42,8 @@ class CategoryBrandItem extends StatelessWidget {
         Expanded(
             flex: 4,
             child: Text(
-              "Technology",
+              category.name??'',
+              // "Technology",
               textWidthBasis: TextWidthBasis.longestLine,
               softWrap: true,
               textAlign: TextAlign.center,

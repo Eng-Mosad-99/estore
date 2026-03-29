@@ -1,7 +1,6 @@
-import 'package:ecommerce_route/domain/entities/response/category/category_data.dart';
+import 'package:ecommerce_route/domain/entities/response/category/category.dart';
+import 'package:ecommerce_route/domain/entities/response/common/meta_data.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../common/meta_data.dart';
 
 part 'category_response.g.dart';
 
@@ -12,7 +11,7 @@ class CategoryResponse {
   @JsonKey(name: 'metadata')
   final Metadata? metadata;
   @JsonKey(name: 'data')
-  final List<CategoryData?>? data;
+  final List<Category?>? data;
 
   CategoryResponse({
     this.results,
@@ -20,6 +19,5 @@ class CategoryResponse {
     this.data,
   });
 
-  factory CategoryResponse.fromJson(Map<String, dynamic> json) => _$CategoryResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$CategoryResponseToJson(this);
+  
 }
