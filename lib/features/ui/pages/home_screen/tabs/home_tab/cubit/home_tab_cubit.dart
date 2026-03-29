@@ -17,13 +17,14 @@ class HomeTabCubit extends Cubit<HomeTabState> {
     AppAssets.announcement2,
     AppAssets.announcement3,
   ];
-
+  HomeTabSuccessState successState = HomeTabSuccessState();
   getAllCategories() async {
     try {
       emit(CategoryLoading());
       var response = await categoryUseCase.invoke();
 
-      emit(CategoryLoaded(categories: response ?? []));
+      // emit(CategoryLoaded(categories: response ?? []));
+      emit(successState=successState.copyWith(categories: response));
     } on AppException catch (e) {
       print(e);
       emit(CategoryError(errorMsg: e.message));
@@ -37,7 +38,8 @@ class HomeTabCubit extends Cubit<HomeTabState> {
       emit(BrandsLoading());
       var response = await brandsUseCase.invoke();
 
-      emit(BrandsLoaded(brands: response ?? []));
+      emit(successState = successState.copyWith(brands: response));
+      // emit(BrandsLoaded(brands: response ?? []));
     } on AppException catch (e) {
       print(e);
       emit(BrandsError(errorMsg: e.message));

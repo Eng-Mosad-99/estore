@@ -35,10 +35,10 @@ class _HomeTabState extends State<HomeTab> {
           _lineBreak(name: "Categories"),
           BlocBuilder<HomeTabCubit, HomeTabState>(
             bloc: cubit..getAllCategories(),
-            buildWhen: (previous, current) => current is CategoryLoaded||current is CategoryLoading|| current is CategoryError,
+            // buildWhen: (previous, current) => current is CategoryLoaded||current is CategoryLoading|| current is CategoryError,
             builder: (context, state) {
-              if (state is CategoryLoaded) {
-                return _buildCategoryBrandSec(state.categories);
+              if (state is HomeTabSuccessState) {
+                return _buildCategoryBrandSec(state.categories??[ ]);
               } else if (state is CategoryError) {
                 return MainErrorWidget(
                   errorMessage: state.errorMsg,
@@ -55,10 +55,10 @@ class _HomeTabState extends State<HomeTab> {
           // _buildCategoryBrandSec(const CategoryBrandItem()),
            BlocBuilder<HomeTabCubit, HomeTabState>(
             bloc: cubit..getAllBrands(),
-            buildWhen: (previous, current) => current is BrandsLoaded || current is BrandsLoading || current is BrandsError,
+            // buildWhen: (previous, current) => current is BrandsLoaded || current is BrandsLoading || current is BrandsError,
             builder: (context, state) {
-              if (state is BrandsLoaded) {
-                return _buildCategoryBrandSec(state.brands);
+              if (state is HomeTabSuccessState) {
+                return _buildCategoryBrandSec(state.brands??[ ]);
               } else if (state is BrandsError) {
                 return MainErrorWidget(
                   errorMessage: state.errorMsg,

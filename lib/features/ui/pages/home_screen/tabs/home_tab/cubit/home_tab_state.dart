@@ -6,10 +6,10 @@ final class HomeTabInitial extends HomeTabState {}
 
 final class CategoryLoading extends HomeTabState {}
 
-final class CategoryLoaded extends HomeTabState {
-  final List<CategoryOrBrand> categories;
-  CategoryLoaded({required this.categories});
-} 
+// final class CategoryLoaded extends HomeTabState {
+//   final List<CategoryOrBrand> categories;
+//   CategoryLoaded({required this.categories});
+// }
 
 final class CategoryError extends HomeTabState {
   final String errorMsg;
@@ -18,12 +18,29 @@ final class CategoryError extends HomeTabState {
 
 final class BrandsLoading extends HomeTabState {}
 
-final class BrandsLoaded extends HomeTabState {
-  final List<CategoryOrBrand> brands;
-  BrandsLoaded({required this.brands});
-} 
+// final class BrandsLoaded extends HomeTabState {
+//   final List<CategoryOrBrand> brands;
+//   BrandsLoaded({required this.brands});
+// }
 
 final class BrandsError extends HomeTabState {
   final String errorMsg;
   BrandsError({required this.errorMsg});
+}
+
+final class HomeTabSuccessState extends HomeTabState {
+  List<CategoryOrBrand>? categories;
+  List<CategoryOrBrand>? brands;
+
+  HomeTabSuccessState({this.brands, this.categories});
+
+  HomeTabSuccessState copyWith({
+     List<CategoryOrBrand>? categories,
+     List<CategoryOrBrand>? brands,
+  }) {
+    return HomeTabSuccessState(
+      categories: categories ?? this.categories,
+      brands: brands ?? this.brands,
+    );
+  }
 }
