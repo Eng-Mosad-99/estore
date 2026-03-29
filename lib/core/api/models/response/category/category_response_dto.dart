@@ -1,4 +1,4 @@
-import 'package:ecommerce_route/core/api/models/response/category/category_dto.dart';
+import 'package:ecommerce_route/core/api/models/response/common/category_or_brand_dto.dart';
 import 'package:ecommerce_route/core/api/models/response/common/meta_data_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -11,7 +11,7 @@ class CategoryResponseDto {
   @JsonKey(name: 'metadata')
   final MetaDataDto? metadata;
   @JsonKey(name: 'data')
-  final List<CategoryDto?>? data;
+  final List<CategoryOrBrandDto?>? data;
 
   CategoryResponseDto({
     this.results,

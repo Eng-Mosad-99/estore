@@ -1,9 +1,9 @@
-import '../../../domain/entities/response/category/category.dart';
-import '../models/response/category/category_dto.dart';
+import '../../../domain/entities/response/common/category_or_brand.dart';
+import '../models/response/common/category_or_brand_dto.dart';
 
-extension CategoryMapper on CategoryDto {
-  Category toCategory() {
-    return Category(
+extension CategoryMapper on CategoryOrBrandDto {
+  CategoryOrBrand toCategoryOrBrand() {
+    return CategoryOrBrand(
       name: name,
       id: id,
       slug: slug,

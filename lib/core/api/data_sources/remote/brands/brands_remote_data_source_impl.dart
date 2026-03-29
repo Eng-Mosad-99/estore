@@ -2,21 +2,20 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_route/core/api/api_service.dart';
 import 'package:ecommerce_route/core/api/mappers/category_mapper.dart';
 import 'package:ecommerce_route/core/errors/app_exceptions.dart';
+import 'package:ecommerce_route/data/data_sources/remote/brand_remote_data_source.dart';
 import 'package:ecommerce_route/domain/entities/response/common/category_or_brand.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../data/data_sources/remote/category_remote_data_source.dart';
-
-@Injectable(as: CategoryRemoteDataSource)
-class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
+@Injectable(as: BrandRemoteDataSource)
+class BrandsRemoteDataSourceImpl implements BrandRemoteDataSource {
   final ApiService apiService;
-  CategoryRemoteDataSourceImpl(this.apiService);
+  BrandsRemoteDataSourceImpl(this.apiService);
   @override
-  Future<List<CategoryOrBrand >?> getAllCategories() async {
+  Future<List<CategoryOrBrand >?> getAllBrands() async {
     try {
-      var categoryResponse = await apiService.getAllCategories();
+      var brandResponse = await apiService.getAllBrands();
       //! TODO: List<CategoryDto> ====> List<Category>
-      return categoryResponse.data
+      return brandResponse.data
               ?.map((catDto) => catDto!.toCategoryOrBrand())
               .toList() ??
           [];

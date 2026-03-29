@@ -15,13 +15,17 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
 import '../../data/data_sources/remote/auth_remote_data_source.dart' as _i865;
+import '../../data/data_sources/remote/brand_remote_data_source.dart' as _i114;
 import '../../data/data_sources/remote/category_remote_data_source.dart'
     as _i344;
 import '../../data/repositories/auth_repo_impl.dart' as _i653;
+import '../../data/repositories/brand_repo_impl.dart' as _i78;
 import '../../data/repositories/category_repo_impl.dart' as _i65;
 import '../../domain/repositories/auth/auth_repo.dart' as _i628;
+import '../../domain/repositories/brands/brands_repositories.dart' as _i153;
 import '../../domain/repositories/category/categories_repositories.dart'
     as _i513;
+import '../../domain/use_cases/brands/brands_use_case.dart' as _i532;
 import '../../domain/use_cases/category/category_use_case.dart' as _i512;
 import '../../domain/use_cases/login_use_case.dart' as _i471;
 import '../../domain/use_cases/register_use_case.dart' as _i479;
@@ -33,6 +37,8 @@ import '../../features/ui/pages/home_screen/tabs/home_tab/cubit/home_tab_cubit.d
 import '../api/api_service.dart' as _i299;
 import '../api/data_sources/remote/auth/auth_remote_data_source_impl.dart'
     as _i983;
+import '../api/data_sources/remote/brands/brands_remote_data_source_impl.dart'
+    as _i948;
 import '../api/data_sources/remote/category/category_remote_data_source_impl.dart'
     as _i942;
 import '../api/dio/dio_module.dart' as _i223;
@@ -62,6 +68,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i344.CategoryRemoteDataSource>(
       () => _i942.CategoryRemoteDataSourceImpl(gh<_i299.ApiService>()),
     );
+    gh.factory<_i114.BrandRemoteDataSource>(
+      () => _i948.BrandsRemoteDataSourceImpl(gh<_i299.ApiService>()),
+    );
     gh.factory<_i865.AuthRemoteDataSource>(
       () => _i983.AuthRemoteDataSourceImpl(apiService: gh<_i299.ApiService>()),
     );
@@ -69,6 +78,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i653.AuthRepoImpl(
         remoteDataSource: gh<_i865.AuthRemoteDataSource>(),
       ),
+    );
+    gh.factory<_i153.BrandsRepositories>(
+      () => _i78.BrandRepoImpl(gh<_i114.BrandRemoteDataSource>()),
     );
     gh.factory<_i513.CategoriesRepositories>(
       () => _i65.CategoryRepoImpl(gh<_i344.CategoryRemoteDataSource>()),
@@ -85,8 +97,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i547.RegisterCubit>(
       () => _i547.RegisterCubit(gh<_i479.RegisterUseCase>()),
     );
+    gh.factory<_i532.BrandsUseCase>(
+      () => _i532.BrandsUseCase(gh<_i153.BrandsRepositories>()),
+    );
     gh.factory<_i843.HomeTabCubit>(
-      () => _i843.HomeTabCubit(gh<_i512.CategoryUseCase>()),
+      () => _i843.HomeTabCubit(
+        gh<_i512.CategoryUseCase>(),
+        gh<_i532.BrandsUseCase>(),
+      ),
     );
     gh.factory<_i209.LoginCubit>(
       () => _i209.LoginCubit(gh<_i471.LoginUseCase>()),

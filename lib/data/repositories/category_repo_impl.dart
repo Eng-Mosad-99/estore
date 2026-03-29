@@ -1,5 +1,5 @@
 import 'package:ecommerce_route/data/data_sources/remote/category_remote_data_source.dart';
-import 'package:ecommerce_route/domain/entities/response/category/category.dart';
+import 'package:ecommerce_route/domain/entities/response/common/category_or_brand.dart';
 import 'package:ecommerce_route/domain/repositories/category/categories_repositories.dart';
 import 'package:injectable/injectable.dart';
 
@@ -9,7 +9,7 @@ class CategoryRepoImpl implements CategoriesRepositories{
 
   CategoryRepoImpl(this.categoryRemoteDataSource);
   @override
-  Future<List<Category>?> getAllCategories() {
+  Future<List<CategoryOrBrand>?> getAllCategories() {
    return categoryRemoteDataSource.getAllCategories();
   }
 }

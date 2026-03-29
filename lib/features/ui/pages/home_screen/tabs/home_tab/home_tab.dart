@@ -1,5 +1,5 @@
 import 'package:ecommerce_route/core/config/di.dart';
-import 'package:ecommerce_route/domain/entities/response/category/category.dart';
+import 'package:ecommerce_route/domain/entities/response/common/category_or_brand.dart';
 import 'package:ecommerce_route/features/ui/pages/home_screen/tabs/home_tab/cubit/home_tab_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,6 +35,7 @@ class _HomeTabState extends State<HomeTab> {
           _lineBreak(name: "Categories"),
           BlocBuilder<HomeTabCubit, HomeTabState>(
             bloc: cubit..getAllCategories(),
+            buildWhen: (previous, current) => current is CategoryLoaded||current is CategoryLoading|| current is CategoryError,
             builder: (context, state) {
               if (state is CategoryLoaded) {
                 return _buildCategoryBrandSec(state.categories);
@@ -52,12 +53,30 @@ class _HomeTabState extends State<HomeTab> {
           ),
           _lineBreak(name: "Brands"),
           // _buildCategoryBrandSec(const CategoryBrandItem()),
+           BlocBuilder<HomeTabCubit, HomeTabState>(
+            bloc: cubit..getAllBrands(),
+            buildWhen: (previous, current) => current is BrandsLoaded || current is BrandsLoading || current is BrandsError,
+            builder: (context, state) {
+              if (state is BrandsLoaded) {
+                return _buildCategoryBrandSec(state.brands);
+              } else if (state is BrandsError) {
+                return MainErrorWidget(
+                  errorMessage: state.errorMsg,
+                  onPressed: () {
+                    cubit.getAllBrands();
+                  },
+                );
+              } else {
+                return const MainLoadingWidget();
+              }
+            },
+          ),
         ],
       ),
     );
   }
 
-  SizedBox _buildCategoryBrandSec(List<Category> categories) {
+  SizedBox _buildCategoryBrandSec(List<CategoryOrBrand> categoriesOrBrands) {
     return SizedBox(
       height: 270.h,
       width: double.infinity,
@@ -67,11 +86,11 @@ class _HomeTabState extends State<HomeTab> {
           mainAxisSpacing: 16.h,
           crossAxisSpacing: 16.w,
         ),
-        itemCount: categories.length,
+        itemCount: categoriesOrBrands.length,
         scrollDirection: Axis.horizontal,
         physics: const ScrollPhysics(),
         itemBuilder: (context, index) {
-          return CategoryBrandItem(category: categories[index]);
+          return CategoryBrandItem(categoryOrBrand: categoriesOrBrands[index]);
         },
       ),
     );

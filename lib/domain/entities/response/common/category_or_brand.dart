@@ -1,8 +1,8 @@
 
 import 'package:json_annotation/json_annotation.dart';
-part 'category.g.dart';
+part 'category_or_brand.g.dart';
 @JsonSerializable()
-class Category {
+class CategoryOrBrand {
   @JsonKey(name: '_id')
   final String? id;
   @JsonKey(name: 'name')
@@ -16,7 +16,7 @@ class Category {
   @JsonKey(name: 'updatedAt')
   final String? updatedAt;
 
-  Category({
+  CategoryOrBrand({
     this.id,
     this.name,
     this.slug,

@@ -16,7 +16,7 @@ CategoryResponseDto _$CategoryResponseDtoFromJson(Map<String, dynamic> json) =>
           ?.map(
             (e) => e == null
                 ? null
-                : CategoryDto.fromJson(e as Map<String, dynamic>),
+                : CategoryOrBrandDto.fromJson(e as Map<String, dynamic>),
           )
           .toList(),
     );
