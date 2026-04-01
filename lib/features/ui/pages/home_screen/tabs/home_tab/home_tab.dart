@@ -22,6 +22,12 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   HomeTabCubit cubit = getIt<HomeTabCubit>();
 
+@override
+  void initState() {
+    cubit.getAllBrands();
+    cubit.getAllCategories();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -34,7 +40,7 @@ class _HomeTabState extends State<HomeTab> {
           SizedBox(height: 24.h),
           _lineBreak(name: "Categories"),
           BlocBuilder<HomeTabCubit, HomeTabState>(
-            bloc: cubit..getAllCategories(),
+            bloc: cubit,
             // buildWhen: (previous, current) => current is CategoryLoaded||current is CategoryLoading|| current is CategoryError,
             builder: (context, state) {
               if (state is HomeTabSuccessState) {
@@ -52,9 +58,8 @@ class _HomeTabState extends State<HomeTab> {
             },
           ),
           _lineBreak(name: "Brands"),
-          // _buildCategoryBrandSec(const CategoryBrandItem()),
            BlocBuilder<HomeTabCubit, HomeTabState>(
-            bloc: cubit..getAllBrands(),
+            bloc: cubit,
             // buildWhen: (previous, current) => current is BrandsLoaded || current is BrandsLoading || current is BrandsError,
             builder: (context, state) {
               if (state is HomeTabSuccessState) {

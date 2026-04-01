@@ -8,6 +8,7 @@ import 'package:ecommerce_route/core/api/models/response/brands/brands_response_
 import 'package:retrofit/retrofit.dart';
 
 import 'models/response/category/category_response_dto.dart';
+import 'models/response/products/product_response_dto.dart';
 
 part 'api_service.g.dart';
 
@@ -26,5 +27,7 @@ abstract class ApiService {
 
   @GET(EndPoints.brands)
   Future<BrandResponseDto> getAllBrands();
+  @GET(EndPoints.products)
+  Future<ProductResponseDto> getAllProducts();
   
 }

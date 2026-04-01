@@ -9,16 +9,7 @@ part of 'category_response.dart';
 CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) =>
     CategoryResponse(
       results: (json['results'] as num?)?.toInt(),
-      metadata: json['metadata'] == null
-          ? null
-          : Metadata.fromJson(json['metadata'] as Map<String, dynamic>),
-      data: (json['data'] as List<dynamic>?)
-          ?.map(
-            (e) => e == null
-                ? null
-                : CategoryOrBrand.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
+      metadata: json['metadata'] ,data: json['data'] ,
     );
 
 Map<String, dynamic> _$CategoryResponseToJson(CategoryResponse instance) =>

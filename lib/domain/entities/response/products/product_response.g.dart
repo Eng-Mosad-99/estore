@@ -1,23 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'brand_response.dart';
+part of 'product_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-BrandResponse _$BrandResponseFromJson(Map<String, dynamic> json) =>
-    BrandResponse(
+ProductResponse _$ProductResponseFromJson(Map<String, dynamic> json) =>
+    ProductResponse(
       results: (json['results'] as num?)?.toInt(),
       metadata: json['metadata'] ,
-      data: (json['data'] )
-          ?.map(
-            (e) => CategoryOrBrand.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
+      data: json['data'] ,
     );
 
-Map<String, dynamic> _$BrandResponseToJson(BrandResponse instance) =>
+Map<String, dynamic> _$ProductResponseToJson(ProductResponse instance) =>
     <String, dynamic>{
       'results': instance.results,
       'metadata': instance.metadata,

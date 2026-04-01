@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_route/domain/entities/response/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,14 +8,16 @@ import '../../../core/utils/app_styles.dart';
 import 'custom_txt.dart';
 
 class ProductTabItem extends StatelessWidget {
-  const ProductTabItem({super.key});
-
+  const ProductTabItem({super.key, required this.product});
+  final Product product;
+  
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: AppColors.primary30Opacity, width: 2)),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: AppColors.primary30Opacity, width: 2),
+      ),
       child: Column(
         children: [
           Stack(
@@ -25,8 +28,8 @@ class ProductTabItem extends StatelessWidget {
                   width: 191.w,
                   height: 120.h,
                   fit: BoxFit.cover,
-                  imageUrl:
-                      "https://www.nike.sa/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw42ccc9ea/nk/a9b/7/6/4/b/1/a9b764b1_834c_413e_aec2_f460112b2de6.jpg?sw=2000&sh=2000&sm=fit",
+                  imageUrl: product.images?.first??'',
+                      // "https://www.nike.sa/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw42ccc9ea/nk/a9b/7/6/4/b/1/a9b764b1_834c_413e_aec2_f460112b2de6.jpg?sw=2000&sh=2000&sm=fit",
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryDark,
@@ -39,26 +42,28 @@ class ProductTabItem extends StatelessWidget {
                 ),
               ),
               Positioned(
-                  top: 8.h,
-                  right: 8.w,
-                  child: CircleAvatar(
-                    backgroundColor: AppColors.whiteColor,
-                    radius: 20.r,
-                    child: Center(
-                      child: IconButton(
-                          onPressed: () {
-                            // todo add to favorite
-                          },
-                          color: AppColors.primaryColor,
-                          padding: EdgeInsets.zero,
-                          iconSize: 30.r,
-                          // Adjust icon size as needed
-                          icon: const Icon(
-                            Icons.favorite_border_rounded,
-                            color: AppColors.primaryColor,
-                          )),
+                top: 8.h,
+                right: 8.w,
+                child: CircleAvatar(
+                  backgroundColor: AppColors.whiteColor,
+                  radius: 20.r,
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () {
+                        // todo add to favorite
+                      },
+                      color: AppColors.primaryColor,
+                      padding: EdgeInsets.zero,
+                      iconSize: 30.r,
+                      // Adjust icon size as needed
+                      icon: const Icon(
+                        Icons.favorite_border_rounded,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
-                  ))
+                  ),
+                ),
+              ),
             ],
           ),
           Padding(
@@ -68,49 +73,43 @@ class ProductTabItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTxt(
-                  text: "Nike Air Jordan",
+                  text: product.title ?? '',
+                  // text: "Nike Air Jordan",
                   fontSize: 12.sp,
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 2.h),
                 CustomTxt(
-                  text: "NIKE SHOES FLEXIBLE FOR MEN",
+                  text: product.description ?? "",
+                  // text: "NIKE SHOES FLEXIBLE FOR MEN",
                   fontSize: 12.sp,
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Row(children: [
-                  const CustomTxt(
-                    text: "EGP 1500",
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  CustomTxt(
-                    text: "EGP 2000",
-                    textStyle: AppStyles.regular11SalePrice
-                        .copyWith(decoration: TextDecoration.lineThrough),
-                  ),
-                ]),
-                SizedBox(
-                  height: 1.h,
-                ),
+                SizedBox(height: 1.h),
                 Row(
                   children: [
                     CustomTxt(
-                      text: "Review (4.8)",
+                      text: "EGP ${product.price}",
+                      // text: "EGP 1500",
+                    ),
+                    SizedBox(width: 8.w),
+                    CustomTxt(
+                      text: "EGP ${(product.price!)*2}",
+                      // text: "EGP 2000",
+                      textStyle: AppStyles.regular11SalePrice.copyWith(
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 1.h),
+                Row(
+                  children: [
+                    CustomTxt(
+                      text: "Review (${product.ratingsAverage})",
+                      // text: "Review (4.8)",
                       fontSize: 12.sp,
                     ),
-                    Icon(
-                      Icons.star,
-                      color: AppColors.yellowColor,
-                      size: 25.sp,
-                    ),
-                    const Spacer(
-                      flex: 1,
-                    ),
+                    Icon(Icons.star, color: AppColors.yellowColor, size: 25.sp),
+                    const Spacer(flex: 1),
                     InkWell(
                       onTap: () {
                         //   todo add to cart
@@ -121,12 +120,12 @@ class ProductTabItem extends StatelessWidget {
                         size: 32.sp,
                         color: AppColors.primaryColor,
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

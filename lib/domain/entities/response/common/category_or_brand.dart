@@ -25,5 +25,7 @@ class CategoryOrBrand {
     this.updatedAt,
   });
 
+  static fromJson(Map<String, dynamic> json) {}
+
   
 }

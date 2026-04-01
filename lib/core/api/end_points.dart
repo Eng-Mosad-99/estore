@@ -4,5 +4,6 @@ class EndPoints {
   static const String register = '/auth/signup';
   static const String categories= '/categories';
   static const String brands= '/brands';
+  static const String products= '/products';
 
 }

@@ -1,23 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'brand_response.dart';
+// part of 'product_response_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-BrandResponse _$BrandResponseFromJson(Map<String, dynamic> json) =>
-    BrandResponse(
+import 'package:ecommerce_route/core/api/models/response/products/product_response_dto.dart';
+
+ProductResponseDto _$ProductResponseDtoFromJson(Map<String, dynamic> json) =>
+    ProductResponseDto(
       results: (json['results'] as num?)?.toInt(),
       metadata: json['metadata'] ,
-      data: (json['data'] )
-          ?.map(
-            (e) => CategoryOrBrand.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
+      data: json['data'] ,
+          
     );
 
-Map<String, dynamic> _$BrandResponseToJson(BrandResponse instance) =>
+Map<String, dynamic> _$ProductResponseDtoToJson(ProductResponseDto instance) =>
     <String, dynamic>{
       'results': instance.results,
       'metadata': instance.metadata,
